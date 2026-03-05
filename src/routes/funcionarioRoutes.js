@@ -14,5 +14,6 @@ router.get('/buscar', controller.buscar)
 router.get('/exportar-csv', controller.exportarCSV)
 router.post('/', controller.cadastrar)
 router.delete('/:id', controller.deletar)
+router.put('/:id', controller.atualizar)
 
 module.exports = router

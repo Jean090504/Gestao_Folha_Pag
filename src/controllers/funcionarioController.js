@@ -60,9 +60,44 @@ exports.deletar = (req, res) => {
     res.json({mensagem: 'Sucesso: Funcionário deletado com sucesso!!!'})
 }
 
+//Salva no arquivo CSV e exporta o mesmo
 exports.exportarCSV = (req, res) => {
     const header = "ID;Nome;Cargo;Salário Base;INSS;IRRF;Salário Líquido\n";
     const linhas = bancoDeDados.map(f => `${f.id};${f.nome};${f.cargo};${f.salarioBase};${f.inss};${f.irrf};${f.salarioLiquido}`).join('\n');
     fs.writeFileSync('./FolhaDePagamento.csv', header + linhas);
     res.json({ mensagem: "CSV gerado!" });
+}
+
+//Atualiza cadastro de funcionário
+exports.atualizar = (req, res) => {
+    const id = Number(req.params.id)
+    const { nome, cargo, salarioBase } = req.body
+
+    const index = bancoDeDados.findIndex(f => f && f.id === id)
+
+    if (index === -1) {
+        return res.status(404).json({ mensagem: "ERRO: Funcionário não encontrado para atualização!" })
+    }
+
+    // Atualiza apenas o que foi enviado
+    if (nome) bancoDeDados[index].nome = nome
+    if (cargo) bancoDeDados[index].cargo = cargo
+    
+    if (salarioBase) {
+        const sb = Number(salarioBase)
+        const inss = sb * 0.10
+        const baseIRRF = sb - inss
+        
+        // Recalculando o IRRF com a fórmula:
+        // $$IRRF = \begin{cases} base \times 0.275, & \text{se } base > 5000 \\ base \times 0.15, & \text{se } 2500 < base \le 5000 \\ 0, & \text{caso contrário} \end{cases}$$
+        let irrf = baseIRRF > 5000 ? baseIRRF * 0.275 : (baseIRRF > 2500 ? baseIRRF * 0.15 : 0)
+
+        bancoDeDados[index].salarioBase = sb
+        bancoDeDados[index].inss = inss
+        bancoDeDados[index].irrf = Number(irrf).toFixed(2);
+        bancoDeDados[index].salarioLiquido = sb - inss - irrf
+    }
+
+    salvar()
+    res.json({ mensagem: "Sucesso: Funcionário atualizado!", dados: bancoDeDados[index] })
 }

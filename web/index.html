@@ -13,39 +13,81 @@
     <title>TechFinance - Gestão de Folha</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="./script.js" defer></script>
+    <style>
+        /* Animação personalizada de entrada suave */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen p-8">
-    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-6">
-        <h1 class="text-3xl font-bold text-blue-600 mb-6">Folha de Pagamento - TechFinance</h1>
+<body class="bg-slate-50 min-h-screen font-sans antialiased text-slate-900">
+    <div class="max-w-5xl mx-auto py-12 px-4">
+        
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-extrabold text-blue-700 tracking-tight">TechFinance</h1>
+            <p class="text-slate-500 mt-2">Sistema Inteligente de Gestão de Folha de Pagamento</p>
+        </header>
 
-        <div class="mb-8 p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
-            <h2 class="font-bold text-blue-800">Teste de Conexão (CORS)</h2>
-            <button onclick="testarConexao()" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                Verificar API
-            </button>
-            <p id="statusCORS" class="mt-2 text-sm font-medium"></p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <input id="nome" type="text" placeholder="Nome do Funcionário" class="border p-2 rounded w-full">
-            <input id="cargo" type="text" placeholder="Cargo" class="border p-2 rounded w-full">
-            <input id="salario" type="number" placeholder="Salário Base" class="border p-2 rounded w-full">
-            <button onclick="cadastrar()" class="md:col-span-3 bg-green-600 text-white font-bold py-2 rounded hover:bg-green-700">
-                Cadastrar Funcionário
-            </button>
-        </div>
-
-        <hr class="my-6">
-
-        <div>
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl font-bold text-gray-700">Funcionários Cadastrados</h2>
-                <button onclick="carregarFuncionarios()" class="text-blue-600 hover:underline">Atualizar Lista</button>
+        <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 mb-10">
+            <h2 class="text-lg font-semibold mb-6 flex justify-center items-center gap-2 text-center">
+                <span class="text-blue-500">Novo Funcionário</span> 
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-slate-400 uppercase">Nome Completo</label>
+                    <input id="nome" type="text" placeholder="Ex: Jean Costa" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent transition outline-none">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-slate-400 uppercase">Cargo Atual</label>
+                    <input id="cargo" type="text" placeholder="Ex: Desenvolvedor" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent transition outline-none">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-slate-400 uppercase">Salário Base</label>
+                    <input id="salario" type="number" placeholder="R$ 0,00" class="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-transparent transition outline-none">
+                </div>
+                <button onclick="cadastrar()" class="md:col-span-3 bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transform active:scale-[0.98] transition-all shadow-lg shadow-blue-200">
+                    Finalizar Cadastro
+                </button>
             </div>
-                <div id="lista" class="space-y-4">
+        </section>
+
+        <section>
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+                <h2 class="text-2xl font-bold text-blue-500">Equipe Ativa</h2>
+                
+                <div class="relative w-full md:w-80">
+                    <input id="inputBusca" type="text" oninput="buscarFuncionarios()" placeholder="Buscar por nome..." 
+                           class="w-full pl-10 pr-4 py-2 bg-white border border-slate-200 rounded-full text-sm focus:ring-2 focus:ring-blue-400 outline-none transition">
+                    <span class="absolute left-3 top-2.5 text-slate-400">🔍</span>
+                </div>
+            </div>
+
+            <div id="lista" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                </div>
+        </section>
+    </div>
+
+    <div id="modalEditar" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-8 w-full max-w-md shadow-2xl scale-in-center">
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">Editar Perfil</h2>
+            <p class="text-slate-500 text-sm mb-6">Altere as informações do colaborador abaixo.</p>
+            
+            <input id="idEditar" type="hidden"> 
+            <div class="space-y-5">
+                <input id="nomeEditar" type="text" class="w-full border-b-2 border-slate-100 p-2 focus:border-blue-500 outline-none transition font-medium text-lg">
+                <input id="cargoEditar" type="text" class="w-full border-b-2 border-slate-100 p-2 focus:border-blue-500 outline-none transition">
+                <input id="salarioEditar" type="number" class="w-full border-b-2 border-slate-100 p-2 focus:border-blue-500 outline-none transition text-blue-600 font-bold">
+            </div>
+            
+            <div class="flex justify-end gap-3 mt-10">
+                <button onclick="fecharModal()" class="px-6 py-2 text-slate-400 font-bold hover:text-slate-600">Voltar</button>
+                <button onclick="salvarEdicao()" class="px-8 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 shadow-md transition">Salvar</button>
             </div>
         </div>
-    
-
-    </body>
-    </html>
+    </div>
+</body>
+</html>

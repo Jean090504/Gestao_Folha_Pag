@@ -2,11 +2,11 @@
   {
     "nome": "Thiago Costa",
     "cargo": "Desenvolvedor",
-    "salarioBase": 6000,
+    "salarioBase": 4500,
     "id": 539,
-    "inss": 600,
-    "irrf": "1485.00",
-    "salarioLiquido": 3915
+    "inss": 450,
+    "irrf": "607.50",
+    "salarioLiquido": 3442.5
   },
   {
     "nome": "Jean Costa",
@@ -34,5 +34,41 @@
     "inss": 320,
     "irrf": "432.00",
     "salarioLiquido": 2448
+  },
+  {
+    "nome": "Cosme Ribeiro",
+    "cargo": "Desenvolvedor",
+    "salarioBase": 6500,
+    "id": 397,
+    "inss": 650,
+    "irrf": "1608.75",
+    "salarioLiquido": 4241.25
+  },
+  {
+    "nome": "Larissa Felix",
+    "cargo": "Social Midia",
+    "salarioBase": 9000,
+    "id": 309,
+    "inss": 900,
+    "irrf": "2227.50",
+    "salarioLiquido": 5872.5
+  },
+  {
+    "nome": "Maria José",
+    "cargo": "Auxiliar Logística",
+    "salarioBase": 3500,
+    "id": 601,
+    "inss": 350,
+    "irrf": "472.50",
+    "salarioLiquido": 2677.5
+  },
+  {
+    "nome": "Allan Oliveira",
+    "cargo": "DBA",
+    "salarioBase": 5400,
+    "id": 354,
+    "inss": 540,
+    "irrf": "729.00",
+    "salarioLiquido": 4131
   }
 ]
