@@ -70,5 +70,14 @@
     "inss": 540,
     "irrf": "729.00",
     "salarioLiquido": 4131
+  },
+  {
+    "nome": "Hélio Alves",
+    "cargo": "Engenharia",
+    "salarioBase": 8500,
+    "id": 411,
+    "inss": 850,
+    "irrf": "2103.75",
+    "salarioLiquido": 5546.25
   }
 ]
