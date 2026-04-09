@@ -7,6 +7,7 @@
 
 const express = require('express')
 const cors = require('cors')
+const helmet = require('helmet') // <--- Faltava esta linha aqui!
 const funcionarioRoutes = require('./routes/funcionarioRoutes')
 
 const app = express()
@@ -19,7 +20,7 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
-app.use(helmet())
+app.use(helmet()) // Agora ele vai reconhecer o que é helmet
 app.use(express.json())
 
 //Monta a rota /funcionario
