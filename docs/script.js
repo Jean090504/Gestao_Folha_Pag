@@ -7,7 +7,7 @@
 
 'use strict'
 
-const API_URL = 'https://folha-de-pagamento.onrender.com/funcionarios'
+const API_URL = 'https://projeto-gfp.onrender.com/funcionario' 
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Sistema iniciado: Carregando dados...")
